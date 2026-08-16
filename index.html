@@ -900,6 +900,71 @@
                 });
             }
 
+            function readStringValue(value) {
+                if (value === undefined || value === null) return '';
+                if (typeof value === 'string') return value.trim();
+                if (typeof value === 'number') return String(value);
+                if (typeof value === 'object') {
+                    if (value.name) return String(value.name);
+                    if (value.id) return String(value.id);
+                    if (value.utc) return String(value.utc);
+                    if (value.abbreviation) return String(value.abbreviation);
+                    if (value.isp) return String(value.isp);
+                    if (value.org) return String(value.org);
+                }
+                return String(value);
+            }
+
+            function resolveIsp(data) {
+                const candidates = [
+                    data.isp,
+                    data.org,
+                    data.as,
+                    data.carrier,
+                    data.connection && data.connection.isp,
+                    data.connection && data.connection.org,
+                    data.connection && data.connection.asn,
+                    data.asn
+                ];
+
+                for (const candidate of candidates) {
+                    const value = readStringValue(candidate);
+                    if (value && value !== '[object Object]') {
+                        return value;
+                    }
+                }
+                return '未知';
+            }
+
+            function resolveTimezone(data) {
+                const timezoneObj = data.timezone && typeof data.timezone === 'object' ? data.timezone : null;
+                const locationObj = data.location && typeof data.location === 'object' ? data.location : null;
+
+                const candidates = [
+                    data.timezone,
+                    data.timezone_name,
+                    data.timezoneId,
+                    data.timezone_name,
+                    locationObj && locationObj.timezone,
+                    locationObj && locationObj.time_zone,
+                    timezoneObj && timezoneObj.id,
+                    timezoneObj && timezoneObj.utc,
+                    timezoneObj && timezoneObj.abbreviation,
+                    data.utc_offset
+                ];
+
+                for (const candidate of candidates) {
+                    const value = readStringValue(candidate);
+                    if (value && value !== '[object Object]') {
+                        if (typeof candidate === 'object' && candidate && candidate.id && candidate.utc) {
+                            return `${candidate.id} (${candidate.utc})`;
+                        }
+                        return value;
+                    }
+                }
+                return '未知';
+            }
+
             function displayData(data) {
                 // IP 地址
                 elements.ip.textContent = data.query || data.ip || '未知';
@@ -922,8 +987,7 @@
                 elements.city.classList.remove('skeleton');
 
                 // 运营商
-                const ispStr = data.isp || data.org || data.as || '未知';
-                elements.isp.textContent = ispStr;
+                elements.isp.textContent = resolveIsp(data);
                 elements.isp.classList.remove('skeleton');
 
                 // 经纬度
@@ -937,7 +1001,7 @@
                 elements.coords.classList.remove('skeleton');
 
                 // 时区
-                elements.timezone.textContent = data.timezone || '未知';
+                elements.timezone.textContent = resolveTimezone(data);
                 elements.timezone.classList.remove('skeleton');
 
                 // 状态更新
