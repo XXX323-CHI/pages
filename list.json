@@ -26,19 +26,19 @@
     },
     {
       "name": "邮件发送服务",
-      "url": "https://srecords.dpdns.org/contents.html",
+      "url": "javascript:location.reload();",
       "icon": "🚫",
       "description": "send.为邮件发送服务无法直接访问"
     },
     {
       "name": "邮件查看服务",
-      "url": "https://srecords.dpdns.org/contents.html",
+      "url": "javascript:location.reload();",
       "icon": "🚫",
       "description": "mailbackend.为邮件查看服务无法直接访问"
     },
     {
       "name": "网页目录",
-      "url": "https://srecords.dpdns.org/contents.html",
+      "url": "javascript:location.reload();",
       "icon": "📁",
       "description": "网页目录（当前访问的网站）"
     },
