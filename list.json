@@ -1,0 +1,52 @@
+{
+  "links": [
+    {
+      "name": "主页",
+      "url": "https://srecords.dpdns.org",
+      "icon": "🏠",
+      "description": "一切的开始"
+    },
+    {
+      "name": "邮件服务",
+      "url": "https://mail.srecords.dpdns.org",
+      "icon": "📧",
+      "description": "邮件服务"
+    },
+    {
+      "name": "订阅提醒服务",
+      "url": "https://day.srecords.dpdns.org",
+      "icon": "📅",
+      "description": "订阅提醒服务"
+    },
+    {
+      "name": "挂载服务",
+      "url": "https://storage.srecords.dpdns.org",
+      "icon": "📚",
+      "description": "挂载服务"
+    },
+    {
+      "name": "邮件发送服务",
+      "url": "https://srecords.dpdns.org/contents.html",
+      "icon": "🚫",
+      "description": "send.为邮件发送服务无法直接访问"
+    },
+    {
+      "name": "邮件查看服务",
+      "url": "https://srecords.dpdns.org/contents.html",
+      "icon": "🚫",
+      "description": "mailbackend.为邮件查看服务无法直接访问"
+    },
+    {
+      "name": "网页目录",
+      "url": "https://srecords.dpdns.org/contents.html",
+      "icon": "📁",
+      "description": "网页目录（当前访问的网站）"
+    },
+    {
+      "name": "网页服务",
+      "url": "https://srecords.dpdns.org/",
+      "icon": "🌐",
+      "description": "网页服务（主页）"
+    }
+  ]
+}

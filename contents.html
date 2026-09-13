@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./icon.ico" type="image/x-icon">
-    <title>IP 探测器 - 赛博朋克风格</title>
+    <title>导航中心 - 赛博朋克风格</title>
     <style>
         /* ============ 全局重置与基础样式 ============ */
         :root {
@@ -37,7 +36,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
             color: var(--text-primary);
             -webkit-font-smoothing: antialiased;
@@ -72,13 +71,8 @@
         }
 
         @keyframes grid-pulse {
-            0%,
-            100% {
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         /* ============ 扫描线效果 ============ */
@@ -101,13 +95,13 @@
         .main-container {
             position: relative;
             z-index: 10;
-            width: 90%;
-            max-width: 620px;
-            margin: 20px auto;
+            width: 92%;
+            max-width: 960px;
+            margin: 40px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 28px;
+            gap: 32px;
             animation: fadeInUp 0.8s ease-out;
         }
 
@@ -158,13 +152,8 @@
         }
 
         @keyframes icon-float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-6px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         .main-title {
@@ -178,18 +167,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradient-shift 3s ease-in-out infinite;
-            text-shadow: none;
             filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
         }
 
         @keyframes gradient-shift {
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .subtitle {
@@ -212,13 +195,8 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--neon-cyan));
         }
-        .subtitle::before {
-            left: 15%;
-        }
-        .subtitle::after {
-            right: 15%;
-            transform: scaleX(-1);
-        }
+        .subtitle::before { left: 15%; }
+        .subtitle::after { right: 15%; transform: scaleX(-1); }
 
         /* ============ 状态指示器 ============ */
         .status-bar {
@@ -241,26 +219,9 @@
             animation: dot-blink 1.5s ease-in-out infinite;
         }
 
-        .status-dot.loading {
-            background: var(--neon-gold);
-            box-shadow: 0 0 12px var(--neon-gold), 0 0 25px var(--neon-gold);
-            animation: dot-blink 0.6s ease-in-out infinite;
-        }
-
-        .status-dot.error {
-            background: #ff3333;
-            box-shadow: 0 0 12px #ff3333, 0 0 25px #ff3333;
-            animation: dot-blink 0.4s ease-in-out infinite;
-        }
-
         @keyframes dot-blink {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.25;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.25; }
         }
 
         .status-text {
@@ -268,25 +229,38 @@
             text-transform: uppercase;
         }
 
+        /* ============ 导航卡片网格 ============ */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
         /* ============ 玻璃卡片 ============ */
         .glass-card {
-            width: 100%;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1.5px solid var(--glass-border);
             border-radius: 20px;
-            padding: 32px 28px;
+            padding: 28px 24px;
             position: relative;
             box-shadow: var(--card-shadow);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            cursor: pointer;
         }
 
         .glass-card:hover {
             border-color: var(--glass-border-hover);
             box-shadow: 0 0 45px rgba(0, 240, 255, 0.25), 0 0 80px rgba(255, 0, 229, 0.12), inset 0 0 30px rgba(0, 240, 255, 0.05);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
 
         /* 卡片边角装饰 */
@@ -327,199 +301,80 @@
             opacity: 1;
         }
 
-        /* ============ 信息行 ============ */
-        .info-row {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            padding: 16px 0;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.12);
-            gap: 16px;
-            flex-wrap: wrap;
+        /* 卡片图标 */
+        .card-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
             transition: all 0.3s ease;
-        }
-        .info-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        .info-row:hover {
-            background: rgba(0, 240, 255, 0.03);
-            padding-left: 10px;
-            padding-right: 10px;
-            border-radius: 8px;
-            margin-left: -10px;
-            margin-right: -10px;
-        }
-
-        .info-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            white-space: nowrap;
-            min-width: 100px;
-        }
-
-        .info-label .label-icon {
-            font-size: 1.1rem;
-            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5));
             animation: icon-pulse 2s ease-in-out infinite;
         }
 
         @keyframes icon-pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.15);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
         }
 
-        .info-value {
-            font-size: clamp(0.9rem, 2vw, 1.15rem);
+        .glass-card:hover .card-icon {
+            filter: drop-shadow(0 0 18px rgba(0, 240, 255, 0.9));
+            transform: scale(1.15);
+        }
+
+        /* 卡片标题 */
+        .card-title {
+            font-size: 1.05rem;
             font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             color: var(--text-primary);
-            text-align: right;
-            word-break: break-all;
-            flex: 1;
-            min-width: 150px;
             text-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
             transition: all 0.3s ease;
-            position: relative;
         }
 
-        /* IP 地址特殊高亮 */
-        .ip-value {
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
-            font-weight: 900;
+        .glass-card:hover .card-title {
             color: var(--neon-cyan);
-            text-shadow:
-                0 0 10px rgba(0, 240, 255, 0.7),
-                0 0 30px rgba(0, 240, 255, 0.4),
-                0 0 60px rgba(0, 240, 255, 0.2);
-            letter-spacing: 0.06em;
-            animation: ip-glow 2.5s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
         }
 
-        @keyframes ip-glow {
-            0%,
-            100% {
-                text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 30px rgba(0, 240, 255, 0.4), 0 0 60px rgba(0, 240, 255, 0.2);
-            }
-            50% {
-                text-shadow: 0 0 18px rgba(0, 240, 255, 0.9), 0 0 45px rgba(0, 240, 255, 0.6), 0 0 80px rgba(0, 240, 255, 0.35);
-            }
+        /* 卡片描述 */
+        .card-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.08em;
+            line-height: 1.5;
+            font-family: var(--font-mono);
+            transition: all 0.3s ease;
         }
 
-        /* 属地高亮 */
-        .location-value {
-            color: var(--neon-pink);
-            text-shadow: 0 0 12px rgba(255, 0, 229, 0.5), 0 0 30px rgba(255, 0, 229, 0.25);
-            font-weight: 800;
+        .glass-card:hover .card-desc {
+            color: #aabbdd;
         }
 
-        /* ============ 骨架加载状态 ============ */
-        .skeleton {
-            display: inline-block;
-            background: linear-gradient(90deg,
-                    rgba(0, 240, 255, 0.08) 25%,
-                    rgba(0, 240, 255, 0.2) 50%,
-                    rgba(0, 240, 255, 0.08) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease-in-out infinite;
-            border-radius: 4px;
-            color: transparent !important;
-            text-shadow: none !important;
-            min-width: 100px;
-            min-height: 1em;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 200% 0;
-            }
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        /* ============ 刷新按钮 ============ */
-        .button-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .refresh-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 32px;
-            background: rgba(0, 240, 255, 0.08);
-            border: 1.5px solid var(--glass-border);
-            border-radius: 50px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
+        /* 卡片链接提示 */
+        .card-hint {
+            margin-top: auto;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: var(--font-display);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
         }
 
-        .refresh-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
-            z-index: -1;
-        }
-
-        .refresh-btn:hover {
-            border-color: var(--glass-border-hover);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), 0 0 60px rgba(0, 240, 255, 0.1);
-            transform: translateY(-2px);
+        .glass-card:hover .card-hint {
+            opacity: 1;
             color: var(--neon-cyan);
         }
 
-        .refresh-btn:hover::before {
-            width: 300px;
-            height: 300px;
+        .card-hint::after {
+            content: '→';
+            transition: transform 0.3s ease;
         }
 
-        .refresh-btn:active {
-            transform: translateY(0) scale(0.96);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        }
-
-        .refresh-btn .btn-icon {
-            font-size: 1.2rem;
-            transition: transform 0.4s ease;
-            display: inline-block;
-        }
-        .refresh-btn:hover .btn-icon {
-            transform: rotate(180deg);
+        .glass-card:hover .card-hint::after {
+            transform: translateX(4px);
         }
 
         /* ============ 底部提示 ============ */
@@ -534,6 +389,32 @@
         }
         .footer-note:hover {
             opacity: 1;
+        }
+
+        /* ============ 加载状态 ============ */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            letter-spacing: 0.15em;
+            font-size: 0.85rem;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 240, 255, 0.15);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* ============ 响应式设计 ============ */
@@ -551,55 +432,23 @@
             .glass-card::after {
                 border-radius: 0 0 15px 0;
             }
-            .info-row {
-                flex-direction: column;
-                gap: 6px;
-                padding: 12px 0;
-            }
-            .info-value {
-                text-align: left;
-                font-size: 0.85rem;
-            }
-            .ip-value {
-                font-size: 1.1rem;
-            }
-            .info-label {
-                min-width: auto;
-            }
-            .refresh-btn {
-                padding: 12px 24px;
-                font-size: 0.8rem;
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
             }
             .subtitle::before,
             .subtitle::after {
                 width: 20px;
             }
+            .main-container {
+                margin: 24px auto;
+                gap: 24px;
+            }
         }
 
         @media (min-width: 768px) {
             .glass-card {
-                padding: 38px 36px;
-            }
-        }
-
-        /* ============ 打字机光标效果 ============ */
-        .cursor-blink {
-            display: inline-block;
-            width: 2px;
-            height: 1em;
-            background: var(--neon-cyan);
-            margin-left: 4px;
-            vertical-align: middle;
-            animation: cursor-blink 1s step-end infinite;
-        }
-
-        @keyframes cursor-blink {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
+                padding: 32px 28px;
             }
         }
     </style>
@@ -620,89 +469,27 @@
         <!-- 标题区域 -->
         <header class="header-section">
             <div class="title-wrapper">
-                <div class="title-icon">🌐</div>
-                <h1 class="main-title">IP 探测器</h1>
+                <div class="title-icon">🧭</div>
+                <h1 class="main-title">导航中心</h1>
             </div>
-            <p class="subtitle">Network Intelligence System</p>
+            <p class="subtitle">Navigation Hub</p>
             <div class="status-bar">
-                <span class="status-dot loading" id="statusDot"></span>
-                <span class="status-text" id="statusText">正在连接卫星...</span>
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">系统就绪</span>
             </div>
         </header>
 
-        <!-- 信息卡片 -->
-        <div class="glass-card" id="infoCard">
-            <!-- IP 地址 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">📡</span>
-                    IP 地址
-                </span>
-                <span class="info-value ip-value skeleton" id="ipValue">加载中...</span>
+        <!-- 导航卡片网格 -->
+        <div class="nav-grid" id="navGrid">
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <div>正在加载导航数据...</div>
             </div>
-
-            <!-- 所属国家/地区 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">🏳️</span>
-                    国家 / 地区
-                </span>
-                <span class="info-value location-value skeleton" id="countryValue">加载中...</span>
-            </div>
-
-            <!-- 城市 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">🏙️</span>
-                    城市
-                </span>
-                <span class="info-value skeleton" id="cityValue">加载中...</span>
-            </div>
-
-            <!-- ISP 运营商 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">📶</span>
-                    运营商
-                </span>
-                <span class="info-value skeleton" id="ispValue">加载中...</span>
-            </div>
-
-            <!-- 经纬度 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">📍</span>
-                    经纬度
-                </span>
-                <span class="info-value skeleton" id="coordsValue">加载中...</span>
-            </div>
-
-            <!-- 时区 -->
-            <div class="info-row">
-                <span class="info-label">
-                    <span class="label-icon">🕐</span>
-                    时区
-                </span>
-                <span class="info-value skeleton" id="timezoneValue">加载中...</span>
-            </div>
-        </div>
-
-        <!-- 按钮区域 -->
-        <div class="button-group">
-            <button class="refresh-btn" id="refreshBtn" title="重新获取IP信息">
-                <span class="btn-icon">🔄</span>
-                <span>重新扫描</span>
-            </button>
-
-            <button class="refresh-btn" id="enterSiteBtn" title="进入网站" type="button">
-                <span class="btn-icon">🚀</span>
-                <span>进入网站</span>
-            </button>
         </div>
 
         <!-- 底部提示 -->
         <p class="footer-note">
-            ⚡ 数据来源: ip-api.com &nbsp;|&nbsp; 实时探测 &nbsp;|&nbsp; 安全加密
+            ⚡ 数据驱动 &nbsp;|&nbsp; 实时加载 &nbsp;|&nbsp; 赛博朋克风格
         </p>
     </div>
 
@@ -712,448 +499,203 @@
 
             // ============ DOM 元素引用 ============
             const elements = {
-                ip: document.getElementById('ipValue'),
-                country: document.getElementById('countryValue'),
-                city: document.getElementById('cityValue'),
-                isp: document.getElementById('ispValue'),
-                coords: document.getElementById('coordsValue'),
-                timezone: document.getElementById('timezoneValue'),
+                navGrid: document.getElementById('navGrid'),
+                loadingState: document.getElementById('loadingState'),
                 statusDot: document.getElementById('statusDot'),
-                statusText: document.getElementById('statusText'),
-                refreshBtn: document.getElementById('refreshBtn'),
-                enterSiteBtn: document.getElementById('enterSiteBtn'),
-                card: document.getElementById('infoCard'),
+                statusText: document.getElementById('statusText')
             };
 
-            // ============ 粒子系统 ============
-            class ParticleSystem {
-                constructor(canvas) {
-                    this.canvas = canvas;
-                    this.ctx = canvas.getContext('2d');
-                    this.particles = [];
-                    this.mouse = { x: null, y: null, radius: 120 };
-                    this.resize();
-                    this.initParticles();
-                    this.bindEvents();
-                    this.animate();
-                }
+            // ============ 配置 ============
+            const CONFIG = {
+                dataUrl: 'list.json'  // JSON 数据文件路径
+            };
 
-                resize() {
-                    this.width = this.canvas.width = window.innerWidth;
-                    this.height = this.canvas.height = window.innerHeight;
-                }
-
-                initParticles() {
-                    const particleCount = Math.min(120, Math.floor((this.width * this.height) / 12000));
-                    this.particles = [];
-                    for (let i = 0; i < particleCount; i++) {
-                        this.particles.push(this.createParticle(true));
-                    }
-                }
-
-                createParticle(randomY = false) {
-                    return {
-                        x: Math.random() * this.width,
-                        y: randomY ? Math.random() * this.height : this.height + 10,
-                        size: Math.random() * 2.5 + 0.8,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: -(Math.random() * 0.7 + 0.25),
-                        opacity: Math.random() * 0.55 + 0.25,
-                        color: this.getRandomColor(),
-                        twinkleSpeed: Math.random() * 0.02 + 0.005,
-                        twinklePhase: Math.random() * Math.PI * 2,
-                    };
-                }
-
-                getRandomColor() {
-                    const colors = [
-                        '0, 240, 255', // cyan
-                        '255, 0, 229', // pink
-                        '139, 92, 246', // purple
-                        '57, 255, 20', // green
-                        '255, 215, 0', // gold
-                    ];
-                    return colors[Math.floor(Math.random() * colors.length)];
-                }
-
-                bindEvents() {
-                    window.addEventListener('resize', () => this.resize());
-                    window.addEventListener('mousemove', (e) => {
-                        this.mouse.x = e.clientX;
-                        this.mouse.y = e.clientY;
-                    });
-                    window.addEventListener('mouseleave', () => {
-                        this.mouse.x = null;
-                        this.mouse.y = null;
-                    });
-                    // 触摸支持
-                    window.addEventListener('touchmove', (e) => {
-                        if (e.touches.length > 0) {
-                            this.mouse.x = e.touches[0].clientX;
-                            this.mouse.y = e.touches[0].clientY;
-                        }
-                    });
-                    window.addEventListener('touchend', () => {
-                        this.mouse.x = null;
-                        this.mouse.y = null;
-                    });
-                }
-
-                animate() {  
-                    this.ctx.clearRect(0, 0, this.width, this.height);
-
-                    // 连接线
-                    this.drawConnections();
-
-                    // 粒子
-                    for (let i = 0; i < this.particles.length; i++) {
-                        const p = this.particles[i];
-
-                        // 更新位置
-                        p.x += p.speedX;
-                        p.y += p.speedY;
-                        p.twinklePhase += p.twinkleSpeed;
-                        p.currentOpacity = p.opacity * (0.6 + 0.4 * Math.sin(p.twinklePhase));
-
-                        // 鼠标交互
-                        if (this.mouse.x !== null && this.mouse.y !== null) {
-                            const dx = p.x - this.mouse.x;
-                            const dy = p.y - this.mouse.y;
-                            const dist = Math.sqrt(dx * dx + dy * dy);
-                            if (dist < this.mouse.radius) {
-                                const force = (this.mouse.radius - dist) / this.mouse.radius;
-                                const angle = Math.atan2(dy, dx);
-                                p.x += Math.cos(angle) * force * 2;
-                                p.y += Math.sin(angle) * force * 2;
-                            }
-                        }
-
-                        // 边界检查
-                        if (p.y < -10 || p.x < -10 || p.x > this.width + 10) {
-                            this.particles[i] = this.createParticle(false);
-                            continue;
-                        }
-
-                        // 绘制粒子
-                        this.ctx.beginPath();
-                        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                        this.ctx.fillStyle = `rgba(${p.color}, ${p.currentOpacity})`;
-                        this.ctx.fill();
-
-                        // 光晕
-                        this.ctx.beginPath();
-                        this.ctx.arc(p.x, p.y, p.size * 2.8, 0, Math.PI * 2);
-                        const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.8);
-                        gradient.addColorStop(0, `rgba(${p.color}, ${p.currentOpacity * 0.5})`);
-                        gradient.addColorStop(1, `rgba(${p.color}, 0)`);
-                        this.ctx.fillStyle = gradient;
-                        this.ctx.fill();
-                    }
-
-                    requestAnimationFrame(() => this.animate());
-                }
-
-                drawConnections() {
-                    const maxDist = 140;
-                    for (let i = 0; i < this.particles.length; i++) {
-                        for (let j = i + 1; j < this.particles.length; j++) {
-                            const p1 = this.particles[i];
-                            const p2 = this.particles[j];
-                            const dx = p1.x - p2.x;
-                            const dy = p1.y - p2.y;
-                            const dist = Math.sqrt(dx * dx + dy * dy);
-
-                            if (dist < maxDist) {
-                                const alpha = (1 - dist / maxDist) * 0.25;
-                                this.ctx.beginPath();
-                                this.ctx.moveTo(p1.x, p1.y);
-                                this.ctx.lineTo(p2.x, p2.y);
-                                this.ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
-                                this.ctx.lineWidth = 0.6;
-                                this.ctx.stroke();
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 初始化粒子系统
-            const particleCanvas = document.getElementById('particles-canvas');
-            const particleSystem = new ParticleSystem(particleCanvas);
-
-            // ============ IP 信息获取 ============
-            const API_URL = 'http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query,reverse,mobile,proxy,hosting';
-
-            // 备用API列表
-            const API_FALLBACKS = [
-                'http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query,reverse,mobile,proxy,hosting',
-                'https://ipapi.co/json/',
-                'https://ipwho.is/'
-            ];
-
-            let currentApiIndex = 0;
-            let isFetching = false;
-
-            function setStatus(state, text) {
-                elements.statusDot.className = 'status-dot';
-                if (state === 'loading') {
-                    elements.statusDot.classList.add('loading');
-                } else if (state === 'error') {
-                    elements.statusDot.classList.add('error');
-                } else if (state === 'success') {
-                    // 默认绿色
-                }
+            // ============ 工具函数 ============
+            function setStatus(text, type) {
                 elements.statusText.textContent = text;
+                elements.statusDot.className = 'status-dot';
+                if (type === 'loading') elements.statusDot.classList.add('loading');
+                if (type === 'error') elements.statusDot.classList.add('error');
             }
 
-            function setSkeleton(show) {
-                const values = [elements.ip, elements.country, elements.city, elements.isp, elements.coords, elements.timezone];
-                values.forEach(el => {
-                    if (show) {
-                        el.classList.add('skeleton');
-                        el.textContent = '加载中...';
-                    } else {
-                        el.classList.remove('skeleton');
+            // ============ 渲染卡片 ============
+            function renderCards(data) {
+                // 移除加载状态
+                if (elements.loadingState) {
+                    elements.loadingState.remove();
+                }
+
+                const cards = data.links || [];
+
+                if (cards.length === 0) {
+                    elements.navGrid.innerHTML = `
+                        <div class="loading-state">
+                            <div>暂无导航数据</div>
+                        </div>
+                    `;
+                    setStatus('暂无数据', 'error');
+                    return;
+                }
+
+                // 清空网格
+                elements.navGrid.innerHTML = '';
+
+                // 逐个创建卡片
+                cards.forEach(function(item) {
+                    const card = document.createElement('a');
+                    card.className = 'glass-card';
+                    card.href = item.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+
+                    // 图标
+                    const icon = document.createElement('div');
+                    icon.className = 'card-icon';
+                    icon.textContent = item.icon || '🔗';
+                    card.appendChild(icon);
+
+                    // 标题
+                    const title = document.createElement('div');
+                    title.className = 'card-title';
+                    title.textContent = item.name || '未命名';
+                    card.appendChild(title);
+
+                    // 描述
+                    if (item.description) {
+                        const desc = document.createElement('div');
+                        desc.className = 'card-desc';
+                        desc.textContent = item.description;
+                        card.appendChild(desc);
                     }
+
+                    // 链接提示
+                    const hint = document.createElement('div');
+                    hint.className = 'card-hint';
+                    hint.textContent = '访问';
+                    card.appendChild(hint);
+
+                    elements.navGrid.appendChild(card);
+                });
+
+                setStatus('就绪 · ' + cards.length + ' 个节点', 'ready');
+            }
+
+            // ============ 加载数据 ============
+            async function loadData() {
+                try {
+                    setStatus('正在加载...', 'loading');
+
+                    const response = await fetch(CONFIG.dataUrl);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status} - 无法加载 ${CONFIG.dataUrl}`);
+                    }
+
+                    const data = await response.json();
+                    renderCards(data);
+
+                } catch (error) {
+                    console.error('导航数据加载失败:', error);
+
+                    // 显示错误状态
+                    if (elements.loadingState) {
+                        elements.loadingState.innerHTML = `
+                            <div>⚠ 加载失败</div>
+                            <div style="margin-top:8px;font-size:0.75rem;opacity:0.7;">
+                                ${error.message}
+                            </div>
+                        `;
+                    }
+                    setStatus('加载失败', 'error');
+                }
+            }
+
+            // ============ 初始化粒子背景 ============
+            function initParticles() {
+                const canvas = document.getElementById('particles-canvas');
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                const PARTICLE_COUNT = 60;
+
+                function resize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+
+                function createParticles() {
+                    particles = [];
+                    for (let i = 0; i < PARTICLE_COUNT; i++) {
+                        particles.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            vx: (Math.random() - 0.5) * 0.4,
+                            vy: (Math.random() - 0.5) * 0.4,
+                            radius: Math.random() * 1.5 + 0.5,
+                            alpha: Math.random() * 0.5 + 0.1
+                        });
+                    }
+                }
+
+                function draw() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    particles.forEach(function(p) {
+                        p.x += p.vx;
+                        p.y += p.vy;
+
+                        if (p.x < 0) p.x = canvas.width;
+                        if (p.x > canvas.width) p.x = 0;
+                        if (p.y < 0) p.y = canvas.height;
+                        if (p.y > canvas.height) p.y = 0;
+
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(0, 240, 255, ' + p.alpha + ')';
+                        ctx.fill();
+                    });
+
+                    // 粒子之间的连线
+                    for (let i = 0; i < particles.length; i++) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x;
+                            const dy = particles[i].y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+
+                            if (dist < 130) {
+                                ctx.beginPath();
+                                ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.strokeStyle = 'rgba(0, 240, 255, ' + (0.08 * (1 - dist / 130)) + ')';
+                                ctx.lineWidth = 0.5;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+
+                    requestAnimationFrame(draw);
+                }
+
+                resize();
+                createParticles();
+                draw();
+
+                window.addEventListener('resize', function() {
+                    resize();
+                    createParticles();
                 });
             }
 
-            function readStringValue(value) {
-                if (value === undefined || value === null) return '';
-                if (typeof value === 'string') return value.trim();
-                if (typeof value === 'number') return String(value);
-                if (typeof value === 'object') {
-                    if (value.name) return String(value.name);
-                    if (value.id) return String(value.id);
-                    if (value.utc) return String(value.utc);
-                    if (value.abbreviation) return String(value.abbreviation);
-                    if (value.isp) return String(value.isp);
-                    if (value.org) return String(value.org);
-                }
-                return String(value);
+            // ============ 启动 ============
+            function init() {
+                initParticles();
+                loadData();
             }
 
-            function resolveIsp(data) {
-                const candidates = [
-                    data.isp,
-                    data.org,
-                    data.as,
-                    data.carrier,
-                    data.connection && data.connection.isp,
-                    data.connection && data.connection.org,
-                    data.connection && data.connection.asn,
-                    data.asn
-                ];
-
-                for (const candidate of candidates) {
-                    const value = readStringValue(candidate);
-                    if (value && value !== '[object Object]') {
-                        return value;
-                    }
-                }
-                return '未知';
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
             }
-
-            function resolveTimezone(data) {
-                const timezoneObj = data.timezone && typeof data.timezone === 'object' ? data.timezone : null;
-                const locationObj = data.location && typeof data.location === 'object' ? data.location : null;
-
-                const candidates = [
-                    data.timezone,
-                    data.timezone_name,
-                    data.timezoneId,
-                    data.timezone_name,
-                    locationObj && locationObj.timezone,
-                    locationObj && locationObj.time_zone,
-                    timezoneObj && timezoneObj.id,
-                    timezoneObj && timezoneObj.utc,
-                    timezoneObj && timezoneObj.abbreviation,
-                    data.utc_offset
-                ];
-
-                for (const candidate of candidates) {
-                    const value = readStringValue(candidate);
-                    if (value && value !== '[object Object]') {
-                        if (typeof candidate === 'object' && candidate && candidate.id && candidate.utc) {
-                            return `${candidate.id} (${candidate.utc})`;
-                        }
-                        return value;
-                    }
-                }
-                return '未知';
-            }
-
-            function displayData(data) {
-                // IP 地址
-                elements.ip.textContent = data.query || data.ip || '未知';
-                elements.ip.classList.remove('skeleton');
-
-                // 国家
-                const countryStr = [
-                    data.country || '',
-                    data.countryCode ? `(${data.countryCode})` : ''
-                ].filter(Boolean).join(' ');
-                elements.country.textContent = countryStr || '未知';
-                elements.country.classList.remove('skeleton');
-
-                // 城市
-                const cityStr = [
-                    data.city || '',
-                    data.regionName || ''
-                ].filter(Boolean).join(', ');
-                elements.city.textContent = cityStr || '未知';
-                elements.city.classList.remove('skeleton');
-
-                // 运营商
-                elements.isp.textContent = resolveIsp(data);
-                elements.isp.classList.remove('skeleton');
-
-                // 经纬度
-                if (data.lat !== undefined && data.lon !== undefined) {
-                    elements.coords.textContent = `${data.lat.toFixed(4)}, ${data.lon.toFixed(4)}`;
-                } else if (data.latitude !== undefined && data.longitude !== undefined) {
-                    elements.coords.textContent = `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`;
-                } else {
-                    elements.coords.textContent = '未知';
-                }
-                elements.coords.classList.remove('skeleton');
-
-                // 时区
-                elements.timezone.textContent = resolveTimezone(data);
-                elements.timezone.classList.remove('skeleton');
-
-                // 状态更新
-                setStatus('success', '连接成功 · 数据已加密');
-            }
-
-            function handleError(message) {
-                elements.ip.textContent = '获取失败';
-                elements.country.textContent = '获取失败';
-                elements.city.textContent = '获取失败';
-                elements.isp.textContent = '获取失败';
-                elements.coords.textContent = '获取失败';
-                elements.timezone.textContent = '获取失败';
-
-                document.querySelectorAll('.info-value').forEach(el => el.classList.remove('skeleton'));
-                setStatus('error', `连接异常: ${message || '未知错误'}`);
-            }
-
-            async function fetchWithTimeout(url, timeout = 8000) {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), timeout);
-                try {
-                    const response = await fetch(url, {
-                        signal: controller.signal,
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
-                    return data;
-                } finally {
-                    clearTimeout(timeoutId);
-                }
-            }
-
-            async function fetchIpInfo() {
-                if (isFetching) return;
-                isFetching = true;
-                setStatus('loading', '正在连接卫星...');
-                setSkeleton(true);
-
-                let lastError = null;
-
-                for (let i = 0; i < API_FALLBACKS.length; i++) {
-                    try {
-                        const data = await fetchWithTimeout(API_FALLBACKS[i]);
-
-                        // 处理不同API的返回格式
-                        if (data.status === 'fail') {
-                            throw new Error(data.message || '查询失败');
-                        }
-
-                        if (data.query || data.ip || data.success !== false) {
-                            displayData(data);
-                            isFetching = false;
-                            return;
-                        }
-
-                        if (data.success === false) {
-                            throw new Error(data.message || '查询失败');
-                        }
-
-                        // 如果数据无效，尝试下一个
-                        if (!data.query && !data.ip) {
-                            throw new Error('无效的响应数据');
-                        }
-
-                        displayData(data);
-                        isFetching = false;
-                        return;
-                    } catch (err) {
-                        lastError = err;
-                        console.warn(`API ${i + 1} 失败:`, err.message);
-                        // 继续尝试下一个API
-                    }
-                }
-
-                // 所有API都失败
-                handleError(lastError?.message || '所有API均不可用');
-                isFetching = false;
-            }
-
-            // ============ 事件监听 ============
-            elements.refreshBtn.addEventListener('click', () => {
-                fetchIpInfo();
-                // 按钮动画
-                elements.refreshBtn.style.transform = 'scale(0.94)';
-                setTimeout(() => {
-                    elements.refreshBtn.style.transform = '';
-                }, 150);
-            });
-
-            elements.enterSiteBtn.addEventListener('click', () => {
-                window.open('https://www.baidu.com', '_blank');
-            });
-
-            // 键盘快捷键：R键刷新
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'r' || e.key === 'R') {
-                    if (!e.ctrlKey && !e.metaKey) {
-                        e.preventDefault();
-                        fetchIpInfo();
-                    }
-                }
-            });
-
-            // 页面加载完成后自动获取
-            window.addEventListener('DOMContentLoaded', () => {
-                // 延迟一点让动画先播放
-                setTimeout(() => {
-                    fetchIpInfo();
-                }, 600);
-            });
-
-            // 页面可见性变化时，重新获取（可选）
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible' && !isFetching) {
-                    // 只在页面重新可见且超过10秒后刷新
-                    const lastFetchTime = window._lastFetchTime || 0;
-                    if (Date.now() - lastFetchTime > 10000) {
-                        fetchIpInfo();
-                    }
-                }
-            });
-
-            // 记录上次获取时间
-            const originalFetch = fetchIpInfo;
-            fetchIpInfo = async function() {
-                window._lastFetchTime = Date.now();
-                return originalFetch.apply(this, arguments);
-            };
-
-            // 控制台欢迎信息
-            console.log('%c🌐 IP 探测器已启动', 'font-size:18px; color:#00f0ff; font-weight:bold;');
-            console.log('%c按 R 键快速刷新IP信息', 'font-size:12px; color:#8899cc;');
 
         })();
     </script>
